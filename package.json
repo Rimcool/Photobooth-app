@@ -12,14 +12,16 @@
     "electron": "^28.2.0",
     "electron-builder": "^24.13.3"
   },
-  "build": {
+    "build": {
     "appId": "com.rimla.cutesnaps",
     "productName": "Cute Snaps Photobooth",
     "win": {
       "target": "nsis",
       "icon": "assets/icon.ico",
+      "publisherName": "Rimla",
       "certificateFile": "my-certificate.pfx",
       "certificatePassword": "YourPassword123"
     }
   }
+
 }
