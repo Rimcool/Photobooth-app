@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Capture Time! 📸</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Poppins:wght@600&display=swap">
+  <style>
+    :root {
+      --pink: #ec4899;
+      --rose: #f472b6;
+      --purple: #a855f7;
+      --lavender: #c084fc;
+      --peach: #fb7185;
+      --mint: #34d399;
+      --bg: #fff3fa;
+      --eid-mint: #a8e6cf;
+      --eid-gold: #ffd700;
+      --eid-moon: #ffb6e6;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 20% 20%, #ffd8ea 0 18%, transparent 30%),
+        radial-gradient(circle at 85% 15%, #ffe6f4 0 18%, transparent 30%),
+        radial-gradient(circle at 90% 10%, var(--eid-gold) 0 2px, transparent 4px),
+        linear-gradient(160deg, #ffe5f2 0%, #ffe7fb 45%, #fcefff 100%);
+      font-family: 'Comic Neue', cursive;
+      color: #222;
+      padding: 16px;
+      overflow: auto;
+      position: relative;
+    }
+    body::before {
+      content: '🌙';
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 30px;
+      color: var(--eid-moon);
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+      animation: float 4s infinite;
+    }
+
+    .app {
+      height: calc(100vh - 32px);
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 16px;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .booth {
+      background: rgba(255, 255, 255, 0.72);
+      border: 4px solid #ffe4f4;
+      border-radius: 28px;
+      padding: 16px;
+      display: grid;
+      grid-template-rows: auto 1fr auto auto;
+      gap: 12px;
+      box-shadow: 0 14px 40px rgba(236, 72, 153, 0.22);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .title {
+      font-size: clamp(1.4rem, 2.2vw, 2.1rem);
+      margin: 0;
+      color: var(--purple);
+    }
+    .eid-title {
+      font-size: clamp(1.2rem, 2vw, 1.8rem);
+      color: #6d28d9;
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+    .pill {
+      background: #fff7fb;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-weight: bold;
+      box-shadow: 0 5px 0 #f9a8d4;
+      font-family: 'Poppins', sans-serif;
+      color: #be185d;
+    }
+
+    .camera-wrap {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 10px solid #ffe8f6;
+      box-shadow: 0 10px 24px rgba(236, 72, 153, 0.28);
+      background: #2b1425;
+      min-height: 360px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #preview, #canvas {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .sticker-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: auto;
+      cursor: default;
+    }
+
+    .placed-sticker {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      cursor: grab;
+      pointer-events: auto;
+      user-select: none;
+      touch-action: none;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,.4));
+    }
+
+    .placed-sticker:active {
+      cursor: grabbing;
+    }
+    
+    .resize-handle {
+      position: absolute;
+      right: -8px;
+      bottom: -8px;
+      width: 16px;
+      height: 16px;
+      background: var(--eid-gold);
+      border: 2px solid white;
+      border-radius: 50%;
+      cursor: nwse-resize;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      transition: transform 0.1s ease;
+    }
+    
+    .resize-handle:hover {
+      transform: scale(1.2);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    }
+
+    #canvas { display: none; }
+
+    #timer {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(3rem, 9vw, 8rem);
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 10px 24px rgba(0, 0, 0, 0.8);
+      pointer-events: none;
+      transition: opacity .2s ease;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      position: sticky;
+      bottom: 0;
+      z-index: 5;
+      background: rgba(255, 245, 252, 0.92);
+      padding: 10px;
+      border-radius: 16px;
+      border: 2px solid #fecdd3;
+    }
+
+    button {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      padding: 12px 22px;
+      border: none;
+      border-radius: 999px;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 8px 0 rgba(0, 0, 0, 0.25);
+      transition: transform .1s ease;
+    }
+
+    button:active { transform: translateY(4px); }
+    button:disabled {
+      opacity: 1;
+      filter: grayscale(.35) brightness(.92);
+      cursor: not-allowed;
+    }
+
+    #captureBtn { background: linear-gradient(135deg, #34d399, #10b981); }
+    #retakeBtn { background: linear-gradient(135deg, #fb7185, #f43f5e); }
+    #doneBtn { background: linear-gradient(135deg, #c084fc, #a855f7); }
+
+    .controls button {
+      min-width: 170px;
+    }
+
+    .stickers {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .sticker-tools {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .sticker {
+      min-width: 82px;
+      height: 42px;
+      border-radius: 999px;
+      border: 3px solid #f9a8d4;
+      background: #fff5fb;
+      padding: 0 10px;
+      cursor: pointer;
+      box-shadow: 0 5px 0 #db2777;
+      font-family: 'Poppins', sans-serif;
+      font-size: .78rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sticker.eid-filter {
+      border-color: var(--eid-gold);
+      box-shadow: 0 5px 0 #b46900;
+      background: #fff8e6;
+      color: #8a5a00;
+    }
+    .sticker.eid-filter.active {
+      border-color: #8a5a00;
+      box-shadow: 0 5px 0 #5d3a00;
+      background: #fff0cc;
+    }
+
+    .sticker.active {
+      border-color: var(--purple);
+      box-shadow: 0 5px 0 #4c1d95;
+      color: var(--purple);
+    }
+
+    .sticker-option {
+      width: 64px;
+      height: 64px;
+      border: 3px solid #f9a8d4;
+      background: #fff6fd;
+      border-radius: 18px;
+      padding: 8px;
+      cursor: pointer;
+      box-shadow: 0 5px 0 #be185d;
+    }
+
+    .sticker-option img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+    .sticker-option.active {
+      border-color: #6d28d9;
+      box-shadow: 0 5px 0 #4c1d95;
+    }
+
+    #clearStickersBtn {
+      background: #ef4444;
+      color: #fff;
+      font-size: .85rem;
+      padding: 10px 16px;
+      border-radius: 999px;
+      box-shadow: 0 5px 0 #991b1b;
+    }
+
+    .sidebar {
+      background: #fff8fd;
+      border-radius: 22px;
+      border: 4px solid #ffe4f4;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 12px 30px rgba(236, 72, 153, 0.24);
+    }
+
+    .sidebar h3 {
+      margin: 4px 0 10px;
+      font-size: 1.2rem;
+      color: var(--pink);
+      text-align: center;
+    }
+
+    .thumbs {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      overflow: auto;
+      padding-right: 3px;
+    }
+
+    .thumb {
+      border: 4px solid #ffe4f4;
+      border-radius: 14px;
+      min-height: 92px;
+      background: repeating-linear-gradient(45deg, #fff7fc, #fff7fc 10px, #ffeef8 10px, #ffeef8 20px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6b7280;
+      font-family: 'Poppins', sans-serif;
+      font-size: .88rem;
+      overflow: hidden;
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .review-panel {
+      margin-top: 12px;
+      border-top: 2px dashed #f9a8d4;
+      padding-top: 12px;
+    }
+
+    .review-panel h4 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+      color: #6d28d9;
+      text-align: center;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .review-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .review-actions button {
+      font-size: .82rem;
+      padding: 10px 8px;
+      box-shadow: 0 5px 0 rgba(0,0,0,.25);
+    }
+
+    #downloadBtn { background: linear-gradient(135deg, #60a5fa, #3b82f6); }
+    #shareBtn { background: linear-gradient(135deg, #c084fc, #a855f7); }
+    #printBtn { background: linear-gradient(135deg, #fb7185, #ec4899); }
+    #captureAgainBtn { background: linear-gradient(135deg, #fda4af, #fb7185); }
+
+    .hint {
+      font-size: .84rem;
+      text-align: center;
+      margin-top: 8px;
+      color: #6b7280;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    @media (max-width: 980px) {
+      body { overflow: auto; }
+      .app {
+        height: auto;
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        order: -1;
+      }
+      .thumbs {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <section class="booth">
+      <div class="topbar">
+        <div>
+          <h2 class="title">Eid PhotoBooth Session 🌙</h2>
+          <div class="eid-title">Capture your Eid magic ✨</div>
+        </div>
+        <div class="pill" id="sessionStatus">Shot 0 / 4</div>
+      </div>
+
+      <div class="camera-wrap">
+        <video id="preview" autoplay playsinline></video>
+        <canvas id="canvas" width="1280" height="960"></canvas>
+        <div class="sticker-layer" id="stickerLayer"></div>
+        <div id="timer">Ready</div>
+      </div>
+
+      <div class="stickers">
+        <button class="sticker filter-btn" data-filter="none" type="button">Normal</button>
+        <button class="sticker filter-btn" data-filter="hue-rotate(300deg) saturate(1.8) brightness(1.05)" type="button">Pink Tone</button>
+        <button class="sticker filter-btn" data-filter="sepia(.6) contrast(1.05)" type="button">Retro</button>
+        <button class="sticker filter-btn" data-filter="grayscale(1)" type="button">B&W</button>
+        <button class="sticker filter-btn eid-filter" data-filter="brightness(1.2) contrast(1.1) hue-rotate(30deg)" type="button">Golden Glow ✨</button>
+        <button class="sticker filter-btn eid-filter" data-filter="hue-rotate(180deg) saturate(1.5) brightness(1.1)" type="button">Mint Fresh 🌿</button>
+        <button class="sticker filter-btn eid-filter" data-filter="brightness(1.3) contrast(1.2) blur(1px)" type="button">Sparkle Star ⭐</button>
+        <button class="sticker filter-btn eid-filter" data-filter="brightness(1.15) saturate(1.4) hue-rotate(20deg)" type="button">Eid Radiance 💫</button>
+        <button class="sticker filter-btn eid-filter" data-filter="brightness(1.25) contrast(1.15) saturate(1.3)" type="button">Festival Glow 🎆</button>
+        <button class="sticker filter-btn eid-filter" data-filter="hue-rotate(200deg) brightness(1.1) saturate(1.2)" type="button">Moonlight ✨</button>
+      </div>
+
+      <div class="sticker-tools">
+        <button class="sticker-option" data-sticker-src="assests/stickers/crown.png" type="button" title="Crown sticker">
+          <img src="assests/stickers/crown.png" alt="Crown sticker">
+        </button>
+        <button class="sticker-option" data-sticker-src="assests/stickers/bunny.png" type="button" title="Bunny sticker">
+          <img src="assests/stickers/bunny.png" alt="Bunny sticker">
+        </button>
+        <button class="sticker-option" data-sticker-src="assests/eid/girly lamp.png" type="button" title="Eid Lamp">
+          <img src="assests/eid/girly lamp.png" alt="Eid Lamp">
+        </button>
+        <button class="sticker-option" data-sticker-src="assests/eid/gold bomb.png" type="button" title="Gold Bomb">
+          <img src="assests/eid/gold bomb.png" alt="Gold Bomb">
+        </button>
+        <button class="sticker-option" data-sticker-src="assests/eid/golden eid wish.png" type="button" title="Golden Eid Wish">
+          <img src="assests/eid/golden eid wish.png" alt="Golden Eid Wish">
+        </button>
+        <button id="clearStickersBtn" type="button">Clear Stickers</button>
+      </div>
+
+      <div class="controls">
+        <button id="captureBtn">Take Photo 📸</button>
+        <button id="retakeBtn" type="button">Retake All 🔁</button>
+        <button id="doneBtn" type="button">Done & Open Gallery ➜</button>
+      </div>
+    </section>
+
+    <aside class="sidebar">
+      <h3>Photo Strip (4 shots)</h3>
+      <div class="thumbs" id="thumbs"></div>
+
+      <div class="review-panel" id="reviewPanel">
+        <h4>After capture, choose what to do 💫</h4>
+        <div class="review-actions">
+          <button id="downloadBtn" type="button">Download ⬇️</button>
+          <button id="shareBtn" type="button">Share 📤</button>
+          <button id="printBtn" type="button">Print 🖨️</button>
+          <button id="captureAgainBtn" type="button">Capture Again 🔁</button>
+        </div>
+        <div class="hint" id="reviewHint">Take at least 1 photo to enable actions.</div>
+      </div>
+    </aside>
+  </div>
+
+  <script src="capture.js"></script>
+</body>
+</html>

@@ -1,0 +1,2667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cute Snaps Photobooth 🌙✨</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Poppins:wght@400;500;600;700&family=Dancing+Script:wght@400;700&family=Pacifico&family=Quicksand:wght@400;500;600&display=swap">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    :root {
+      --pink: #ec4899;
+      --rose: #f472b6;
+      --lavender: #c084fc;
+      --mint: #a8e6cf;
+      --gold: #ffd700;
+      --cream: #fff8fb;
+      --eid-moon: #ffb6e6;
+      --eid-gold: #ffd700;
+      --eid-mint: #a8e6;
+      --bg-pink: #fff3fa;
+      --text-dark: #4a1942;
+      --success: #34d399;
+      --warning: #fbbf24;
+      --error: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(45deg, #ff00cc, #333399, #00ccff, #ff9966);
+      background-size: 400% 400%;
+      animation: gradientShift 8s ease infinite;
+      font-family: 'Comic Neue', cursive;
+      color: var(--text-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-image: 
+        radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.3) 2px, transparent 3px),
+        radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.3) 2px, transparent 3px),
+        radial-gradient(circle at 90% 10%, rgba(255, 215, 0, 0.8) 0 2px, transparent 4px);
+      background-size: 56px 56px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        repeating-linear-gradient(
+          45deg,
+          rgba(255, 255, 255, 0.1),
+          rgba(255, 255, 255, 0.1) 10px,
+          rgba(255, 255, 255, 0.05) 10px,
+          rgba(255, 255, 255, 0.05) 20px
+        );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 10% 10%, rgba(255, 0, 204, 0.2) 0px, transparent 50px),
+        radial-gradient(circle at 90% 10%, rgba(0, 204, 255, 0.2) 0px, transparent 50px),
+        radial-gradient(circle at 10% 90%, rgba(255, 153, 102, 0.2) 0px, transparent 50px),
+        radial-gradient(circle at 90% 90%, rgba(51, 51, 153, 0.2) 0px, transparent 50px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background: radial-gradient(circle at 30% 30%, var(--gold), transparent 70%);
+      border-radius: 50%;
+      box-shadow: 0 0 20px var(--gold), inset 0 0 20px rgba(255, 215, 0, 0.5);
+      animation: twinkle 3s infinite;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '🌙';
+      position: absolute;
+      top: 30px;
+      left: 20px;
+      font-size: 40px;
+      color: var(--eid-moon);
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+      animation: float 4s infinite;
+      z-index: 0;
+    }
+
+    .screen {
+      display: none;
+      width: 100%;
+      max-width: 1200px;
+      padding: 20px;
+      z-index: 1;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    /* Welcome Screen */
+    .welcome-container {
+      text-align: center;
+      background: linear-gradient(135deg, #ff00cc, #333399, #00ccff, #ff9966);
+      background-size: 400% 400%;
+      animation: containerGradientShift 6s ease-infinite;
+      padding: 60px 80px;
+      border-radius: 40px;
+      border: 8px solid #fff;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      animation: retroBounce 2s ease-in-out infinite;
+    }
+
+    @keyframes containerGradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .welcome-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        repeating-linear-gradient(
+          45deg,
+          rgba(255, 255, 255, 0.2),
+          rgba(255, 255, 255, 0.2) 10px,
+          rgba(255, 255, 255, 0.1) 10px,
+          rgba(255, 255, 255, 0.1) 20px
+        );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .welcome-container::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.3) 0px, transparent 40px),
+        radial-gradient(circle at 90% 10%, rgba(255, 255, 255, 0.3) 0px, transparent 40px),
+        radial-gradient(circle at 10% 90%, rgba(255, 255, 255, 0.3) 0px, transparent 40px),
+        radial-gradient(circle at 90% 90%, rgba(255, 255, 255, 0.3) 0px, transparent 40px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .welcome-container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: 
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.6), transparent 60%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.4), transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+      animation: rotate 20s linear infinite;
+    }
+
+    .welcome-container::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        linear-gradient(135deg, rgba(255, 255, 255, 0.3), transparent 40%),
+        linear-gradient(45deg, rgba(255, 255, 255, 0.2), transparent 40%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes retroBounce {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-10px) scale(1.02); }
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .welcome-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .retro-title {
+      font-size: 3.5rem;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 8px;
+      margin-bottom: 10px;
+      font-weight: 800;
+      text-shadow: 4px 4px 0 #d94a36, 8px 8px 0 #a63a2a;
+      font-family: 'Poppins', sans-serif;
+      animation: neonFlicker 2s infinite;
+    }
+
+    .retro-subtitle {
+      font-size: 1.5rem;
+      color: #fff;
+      margin-bottom: 30px;
+      font-style: italic;
+      font-weight: 600;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+      font-family: 'Dancing Script', cursive;
+    }
+
+    .story-text {
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 30px;
+      line-height: 1.8;
+      text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    .welcome-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .retro-btn {
+      font-size: 2.2rem;
+      padding: 20px 80px;
+      border: none;
+      border-radius: 60px;
+      background: linear-gradient(135deg, #fff, #ffe6e6);
+      color: #d94a36;
+      box-shadow: 0 12px 0 #a63a2a;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: 'Poppins', sans-serif;
+      position: relative;
+      overflow: hidden;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+
+    .retro-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+      transition: left 0.6s;
+    }
+
+    .retro-btn:hover::before {
+      left: 100%;
+    }
+
+    .retro-btn:active {
+      transform: translateY(6px);
+      box-shadow: 0 6px 0 #a63a2a;
+    }
+
+    .retro-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 0 #a63a2a;
+    }
+
+    .welcome-footer {
+      margin-top: 40px;
+      font-size: 1rem;
+      color: #fff;
+      font-weight: 600;
+      text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .retro-icons {
+      font-size: 100px;
+      margin-bottom: 10px;
+      animation: float 5s infinite;
+      text-shadow: 4px 4px 0 rgba(0,0,0,0.3);
+    }
+
+    .retro-tagline {
+      font-size: 1.8rem;
+      color: #fff;
+      margin-bottom: 30px;
+      font-style: italic;
+      font-family: 'Dancing Script', cursive;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+    }
+
+    .retro-description {
+      font-size: 1.3rem;
+      color: #fff;
+      margin-bottom: 30px;
+      line-height: 1.6;
+      text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    .retro-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 10px 20px;
+      border-radius: 30px;
+      border: 2px solid #fff;
+      color: #fff;
+      font-weight: bold;
+      font-size: 1.1rem;
+      text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+      margin-bottom: 20px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .retro-decor {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 60px;
+      height: 60px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px #d94a36, 0 0 0 8px #fff, 0 0 0 12px #d94a36;
+      animation: twinkle 3s infinite;
+      z-index: 0;
+    }
+
+    .retro-decor::after {
+      content: '✨';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+      color: #d94a36;
+    }
+
+    .retro-corner {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 80px;
+      height: 80px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px #d94a36, 0 0 0 8px #fff, 0 0 0 12px #d94a36;
+      animation: twinkle 3s infinite reverse;
+      z-index: 0;
+    }
+
+    .retro-corner::after {
+      content: '🌙';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 32px;
+      color: #d94a36;
+    }
+
+    .btn-secondary {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      padding: 12px 22px;
+      border: none;
+      border-radius: 999px;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 8px 0 rgba(0, 0, 0, 0.25);
+      transition: transform .1s ease;
+      margin: 5px;
+    }
+
+    .btn-secondary:active {
+      transform: translateY(4px);
+    }
+
+    .btn-secondary:disabled {
+      opacity: 1;
+      filter: grayscale(.35) brightness(.92);
+      cursor: not-allowed;
+    }
+
+    .btn-capture { background: linear-gradient(135deg, #34d399, #10b981); }
+    .btn-retake { background: linear-gradient(135deg, #fb7185, #f43f5e); }
+    .btn-done { background: linear-gradient(135deg, #c084fc, #a855f7); }
+    .btn-download { background: linear-gradient(135deg, #60a5fa, #3b82f6); }
+    .btn-share { background: linear-gradient(135deg, #c084fc, #a855f7); }
+    .btn-print { background: linear-gradient(135deg, #fb7185, #ec4899); }
+    .btn-capture-again { background: linear-gradient(135deg, #fda4af, #fb7185); }
+    .btn-clear { background: #ef4444; }
+
+    /* Capture Screen */
+    .capture-container {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 16px;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .booth {
+      background: rgba(255, 255, 255, 0.72);
+      border: 4px solid #ffe4f4;
+      border-radius: 28px;
+      padding: 16px;
+      display: grid;
+      grid-template-rows: auto 1fr auto auto;
+      gap: 12px;
+      box-shadow: 0 14px 40px rgba(236, 72, 153, 0.22);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .title {
+      font-size: clamp(1.4rem, 2.2vw, 2.1rem);
+      margin: 0;
+      color: var(--purple);
+    }
+
+    .eid-title {
+      font-size: clamp(1.2rem, 2vw, 1.8rem);
+      color: #6d28d9;
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+    .pill {
+      background: #fff7fb;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-weight: bold;
+      box-shadow: 0 5px 0 #f9a8d4;
+      font-family: 'Poppins', sans-serif;
+      color: #be185d;
+    }
+
+    .camera-wrap {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 10px solid #ffe8f6;
+      box-shadow: 0 10px 24px rgba(236, 72, 153, 0.28);
+      background: #2b1425;
+      min-height: 360px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #preview, #canvas {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    #canvas {
+      display: none;
+    }
+
+    .sticker-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: auto;
+      cursor: default;
+    }
+
+    .placed-sticker {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      cursor: grab;
+      pointer-events: auto;
+      user-select: none;
+      touch-action: none;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,.4));
+    }
+
+    .placed-sticker:active {
+      cursor: grabbing;
+    }
+
+    .resize-handle {
+      position: absolute;
+      right: -8px;
+      bottom: -8px;
+      width: 16px;
+      height: 16px;
+      background: var(--eid-gold);
+      border: 2px solid white;
+      border-radius: 50%;
+      cursor: nwse-resize;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      transition: transform 0.1s ease;
+      z-index: 10;
+    }
+
+    .resize-handle:hover {
+      transform: scale(1.2);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    }
+
+    #timer {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(3rem, 9vw, 8rem);
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 10px 24px rgba(0, 0, 0, 0.8);
+      pointer-events: none;
+      transition: opacity .2s ease;
+      z-index: 3;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      position: sticky;
+      bottom: 0;
+      z-index: 5;
+      background: rgba(255, 245, 252, 0.92);
+      padding: 10px;
+      border-radius: 16px;
+      border: 2px solid #fecdd3;
+    }
+
+    .sidebar {
+      background: #fff8fd;
+      border-radius: 22px;
+      border: 4px solid #ffe4f4;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 12px 30px rgba(236, 72, 153, 0.24);
+    }
+
+    .sidebar h3 {
+      margin: 4px 0 10px;
+      font-size: 1.2rem;
+      color: var(--pink);
+      text-align: center;
+    }
+
+    .thumbs {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      overflow: auto;
+      padding-right: 3px;
+    }
+
+    .thumb {
+      border: 4px solid #ffe4f4;
+      border-radius: 14px;
+      min-height: 92px;
+      background: repeating-linear-gradient(45deg, #fff7fc, #fff7fc 10px, #ffeef8 10px, #ffeef8 20px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6b7280;
+      font-family: 'Poppins', sans-serif;
+      font-size: .88rem;
+      overflow: hidden;
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .review-panel {
+      margin-top: 12px;
+      border-top: 2px dashed #f9a8d4;
+      padding-top: 12px;
+    }
+
+    .review-panel h4 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+      color: #6d28d9;
+      text-align: center;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .review-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .review-actions button {
+      font-size: .82rem;
+      padding: 10px 8px;
+      box-shadow: 0 5px 0 rgba(0,0,0,.25);
+    }
+
+    .hint {
+      font-size: .84rem;
+      text-align: center;
+      margin-top: 8px;
+      color: #6b7280;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* Filter Buttons */
+    .filters {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .filter-btn {
+      min-width: 82px;
+      height: 42px;
+      border-radius: 999px;
+      border: 3px solid #f9a8d4;
+      background: #fff5fb;
+      padding: 0 10px;
+      cursor: pointer;
+      box-shadow: 0 5px 0 #db2777;
+      font-family: 'Poppins', sans-serif;
+      font-size: .78rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .filter-btn.eid-filter {
+      border-color: var(--eid-gold);
+      box-shadow: 0 5px 0 #b46900;
+      background: #fff8e6;
+      color: #8a5a00;
+    }
+
+    .filter-btn.eid-filter.active {
+      border-color: #8a5a00;
+      box-shadow: 0 5px 0 #5d3a00;
+      background: #fff0cc;
+    }
+
+    .filter-btn.active {
+      border-color: var(--purple);
+      box-shadow: 0 5px 0 #4c1d95;
+      color: var(--purple);
+    }
+
+    /* Sticker Options */
+    .sticker-tools {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .sticker-option {
+      width: 64px;
+      height: 64px;
+      border: 3px solid #f9a8d4;
+      background: #fff6fd;
+      border-radius: 18px;
+      padding: 8px;
+      cursor: pointer;
+      box-shadow: 0 5px 0 #be185d;
+    }
+
+    .sticker-option img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+    .sticker-option.active {
+      border-color: #6d28d9;
+      box-shadow: 0 5px 0 #4c1d95;
+    }
+
+    /* Adjustments Panel */
+    .adjustments-panel {
+      margin-top: 15px;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 15px;
+      border: 2px solid #ffe4f4;
+    }
+
+    .adjustments-panel h4 {
+      margin: 0 0 15px;
+      font-size: 1rem;
+      color: var(--pink);
+      text-align: center;
+    }
+
+    .slider-group {
+      margin-bottom: 12px;
+    }
+
+    .slider-group label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+      color: #7a285e;
+      font-weight: 600;
+    }
+
+    .slider-group input[type="range"] {
+      width: 100%;
+      height: 8px;
+      border-radius: 5px;
+      background: #ffe4f4;
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .slider-group input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--pink), var(--lavender));
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .slider-group input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--pink), var(--lavender));
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    /* Editing Screen */
+    .editing-container {
+      display: grid;
+      grid-template-columns: 1fr 350px;
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .canvas-area {
+      background: rgba(255, 255, 255, 0.72);
+      border: 4px solid #ffe4f4;
+      border-radius: 28px;
+      padding: 20px;
+      box-shadow: 0 14px 40px rgba(236, 72, 153, 0.22);
+      position: relative;
+    }
+
+    .canvas-area h2 {
+      text-align: center;
+      color: var(--pink);
+      margin-bottom: 15px;
+    }
+
+    #editingCanvas {
+      width: 100%;
+      border-radius: 20px;
+      border: 8px solid #ffe8f6;
+      box-shadow: 0 10px 24px rgba(236, 72, 153, 0.28);
+    }
+
+    .text-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .text-item {
+      position: absolute;
+      cursor: move;
+      pointer-events: auto;
+      user-select: none;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      padding: 5px;
+      min-width: 50px;
+    }
+
+    .text-item.selected {
+      outline: 2px dashed var(--gold);
+      outline-offset: 2px;
+    }
+
+    .editing-sidebar {
+      background: #fff8fd;
+      border-radius: 22px;
+      border: 4px solid #ffe4f4;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      box-shadow: 0 12px 30px rgba(236, 72, 153, 0.24);
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .tab-buttons {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      min-width: 60px;
+      padding: 8px 5px;
+      border: 2px solid #f9a8d4;
+      background: #fff5fb;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #be185d;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, var(--pink), var(--lavender));
+      color: white;
+      border-color: transparent;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Frames */
+    .frame-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .frame-option {
+      border: 3px solid #f9a8d4;
+      background: #fff6fd;
+      border-radius: 10px;
+      padding: 10px;
+      cursor: pointer;
+      text-align: center;
+      font-size: 0.8rem;
+      transition: all 0.2s;
+    }
+
+    .frame-option:hover {
+      transform: scale(1.05);
+    }
+
+    .frame-option.active {
+      border-color: #6d28d9;
+      box-shadow: 0 3px 0 #4c1d95;
+    }
+
+    .frame-preview {
+      font-size: 2rem;
+      margin-bottom: 5px;
+    }
+
+    /* Stickers in editing */
+    .sticker-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .sticker-item {
+      width: 60px;
+      height: 60px;
+      border: 2px solid #f9a8d4;
+      background: #fff6fd;
+      border-radius: 10px;
+      padding: 5px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .sticker-item:hover {
+      transform: scale(1.1);
+      border-color: var(--gold);
+    }
+
+    .sticker-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* Text Tool */
+    .text-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .text-input-group {
+      display: flex;
+      gap: 5px;
+    }
+
+    .text-input-group input {
+      flex: 1;
+      padding: 8px;
+      border: 2px solid #f9a8d4;
+      border-radius: 8px;
+      font-family: 'Comic Neue', cursive;
+      font-size: 0.9rem;
+    }
+
+    .text-input-group button {
+      padding: 8px 12px;
+      background: linear-gradient(135deg, var(--pink), var(--lavender));
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .font-select, .color-select {
+      width: 100%;
+      padding: 8px;
+      border: 2px solid #f9a8d4;
+      border-radius: 8px;
+      font-family: 'Comic Neue', cursive;
+    }
+
+    /* Layouts */
+    .layout-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .layout-option {
+      border: 3px solid #f9a8d4;
+      background: #fff6fd;
+      border-radius: 10px;
+      padding: 15px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .layout-option:hover {
+      transform: scale(1.05);
+    }
+
+    .layout-option.active {
+      border-color: #6d28d9;
+      box-shadow: 0 3px 0 #4c1d95;
+    }
+
+    .layout-preview {
+      font-size: 2.5rem;
+      margin-bottom: 5px;
+    }
+
+    /* Sparkle Toggle */
+    .sparkle-toggle {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .sparkle-toggle label {
+      font-weight: 600;
+      color: var(--pink);
+    }
+
+    .sparkle-toggle input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--gold);
+    }
+
+    /* Gallery Screen */
+    .gallery-container {
+      text-align: center;
+      background: rgba(255,255,250,0.72);
+      padding: 40px;
+      border-radius: 40px;
+      border: 8px solid #fff;
+      box-shadow: 0 20px 50px rgba(236, 72, 153, 0.25);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .gallery-container h2 {
+      font-size: 2.5rem;
+      color: var(--pink);
+      margin-bottom: 20px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .gallery-item {
+      border-radius: 15px;
+      overflow: hidden;
+      border: 4px solid #ffe4f4;
+      box-shadow: 0 8px 20px rgba(236, 72, 153, 0.2);
+      transition: transform 0.2s;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.05);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .gallery-actions {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    /* Sparkle Overlay */
+    .sparkle-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1000;
+      display: none;
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: sparkleAnim 2s infinite;
+    }
+
+    @keyframes sparkleAnim {
+      0%, 100% { opacity: 0; transform: scale(0); }
+      50% { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-25px); }
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+    }
+
+    /* Responsive */
+    @media (max-width: 980px) {
+      body { overflow: auto; }
+      .capture-container,
+      .editing-container {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        order: -1;
+      }
+      .thumbs {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .welcome-container {
+        padding: 30px 20px;
+      }
+      h1 {
+        font-size: 2.5rem;
+      }
+      .btn-primary {
+        font-size: 1.5rem;
+        padding: 15px 40px;
+      }
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 80px;
+      z-index: 100;
+      background: rgba(255,255,255,0.8);
+      border: 2px solid var(--pink);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    body.dark-theme {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: #e0e0e0;
+    }
+
+    body.dark-theme .welcome-container,
+    body.dark-theme .booth,
+    body.dark-theme .sidebar,
+    body.dark-theme .canvas-area,
+    body.dark-theme .editing-sidebar,
+    body.dark-theme .gallery-container {
+      background: rgba(30, 30, 60, 0.8);
+      border-color: #4a1942;
+    }
+
+    body.dark-theme h1,
+    body.dark-theme h2,
+    body.dark-theme h3,
+    body.dark-theme h4 {
+      color: #ffb6e6;
+    }
+
+    body.dark-theme .pill,
+    body.dark-theme .hint,
+    body.dark-theme p {
+      color: #e0e0e0;
+    }
+
+    /* Print Styles */
+    @media print {
+      body {
+        background: white !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Sparkle Overlay -->
+  <div class="sparkle-overlay" id="sparkleOverlay"></div>
+
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" id="themeToggle" title="Toggle Dark/Light Mode">🌙</button>
+
+  <!-- Welcome Screen -->
+  <div class="screen active" id="welcomeScreen">
+    <div class="welcome-container">
+      <div class="retro-decor"></div>
+      <div class="retro-corner"></div>
+      
+      <div class="welcome-content">
+        <div class="retro-title">Retro Snap Studio</div>
+        <div class="retro-subtitle">Where Memories Get Groovy</div>
+        
+        <div class="retro-badge">Eid Edition 2025</div>
+        
+        <div class="retro-icons">📸✨🌙</div>
+        
+        <div class="retro-tagline">Capture Your Eid Magic</div>
+        
+        <div class="story-text">
+          Welcome to the most happening spot in town! 🌟 It's Eid and we're throwing a retro party 
+          where every snap tells a story. From groovy frames to funky stickers, we've got everything 
+          to make your Eid photos pop with personality. So strike a pose, flash that smile, and let's 
+          make some memories that'll last longer than your favorite disco track!
+        </div>
+        
+        <div class="retro-description">
+          Choose your adventure: Classic Polaroids, Funky Collages, or Magical Eid Moments. 
+          The choice is yours, the fun is guaranteed! 🎨💫
+        </div>
+        
+        <div class="welcome-actions">
+          <button class="retro-btn" onclick="startPhotoSession()">Let's Get Snapping! 📸</button>
+        </div>
+        
+        <div class="welcome-footer">Keep it Retro, Keep it Fun! 🌈</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Capture Screen -->
+  <div class="screen" id="captureScreen">
+    <div class="capture-container">
+      <section class="booth">
+        <div class="topbar">
+          <div>
+            <h2 class="title">Eid PhotoBooth Session 🌙</h2>
+            <div class="eid-title">Capture your Eid magic ✨</div>
+          </div>
+          <div class="pill" id="sessionStatus">Shot 0 / 4</div>
+        </div>
+
+        <div class="camera-wrap">
+          <video id="preview" autoplay playsinline></video>
+          <canvas id="canvas" width="1280" height="960"></canvas>
+          <div class="sticker-layer" id="stickerLayer"></div>
+          <div id="timer">Ready</div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+          <button class="filter-btn" data-filter="none" type="button">Normal</button>
+          <button class="filter-btn" data-filter="hue-rotate(300deg) saturate(1.8) brightness(1.05)" type="button">Pink Tone</button>
+          <button class="filter-btn" data-filter="sepia(.6) contrast(1.05)" type="button">Retro</button>
+          <button class="filter-btn" data-filter="grayscale(1)" type="button">B&W</button>
+          <button class="filter-btn eid-filter" data-filter="brightness(1.2) contrast(1.1) hue-rotate(30deg)" type="button">Golden Glow ✨</button>
+          <button class="filter-btn eid-filter" data-filter="hue-rotate(180deg) saturate(1.5) brightness(1.1)" type="button">Mint Fresh 🌿</button>
+          <button class="filter-btn eid-filter" data-filter="brightness(1.3) contrast(1.2) blur(1px)" type="button">Sparkle Star ⭐</button>
+          <button class="filter-btn eid-filter" data-filter="brightness(1.15) saturate(1.4) hue-rotate(20deg)" type="button">Eid Radiance 💫</button>
+        </div>
+
+        <!-- Sticker Tools -->
+        <div class="sticker-tools">
+          <button class="sticker-option" data-sticker-src="assests/stickers/crown.png" type="button" title="Crown sticker">
+            <img src="assests/stickers/crown.png" alt="Crown sticker">
+          </button>
+          <button class="sticker-option" data-sticker-src="assests/stickers/bunny.png" type="button" title="Bunny sticker">
+            <img src="assests/stickers/bunny.png" alt="Bunny sticker">
+          </button>
+          <button class="sticker-option" data-sticker-src="assests/eid/girly lamp.png" type="button" title="Eid Lamp">
+            <img src="assests/eid/girly lamp.png" alt="Eid Lamp">
+          </button>
+          <button class="sticker-option" data-sticker-src="assests/eid/gold bomb.png" type="button" title="Gold Bomb">
+            <img src="assests/eid/gold bomb.png" alt="Gold Bomb">
+          </button>
+          <button class="sticker-option" data-sticker-src="assests/eid/golden eid wish.png" type="button" title="Golden Eid Wish">
+            <img src="assests/eid/golden eid wish.png" alt="Golden Eid Wish">
+          </button>
+          <button class="btn-secondary btn-clear" id="clearStickersBtn" type="button">Clear Stickers</button>
+        </div>
+
+        <!-- Adjustments Panel -->
+        <div class="adjustments-panel">
+          <h4>Adjust Filter Intensity 🎨</h4>
+          <div class="slider-group">
+            <label>Brightness: <span id="brightnessValue">100</span>%</label>
+            <input type="range" id="brightnessSlider" min="50" max="150" value="100">
+          </div>
+          <div class="slider-group">
+            <label>Contrast: <span id="contrastValue">100</span>%</label>
+            <input type="range" id="contrastSlider" min="50" max="150" value="100">
+          </div>
+          <div class="slider-group">
+            <label>Saturation: <span id="saturationValue">100</span>%</label>
+            <input type="range" id="saturationSlider" min="0" max="200" value="100">
+          </div>
+          <div class="slider-group">
+            <label>Hue Rotate: <span id="hueValue">0</span>°</label>
+            <input type="range" id="hueSlider" min="0" max="360" value="0">
+          </div>
+          <div class="slider-group">
+            <label>Blur: <span id="blurValue">0</span>px</label>
+            <input type="range" id="blurSlider" min="0" max="10" value="0">
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+          <button class="btn-secondary btn-capture" id="captureBtn">Take Photo 📸</button>
+          <button class="btn-secondary btn-retake" id="retakeBtn" type="button">Retake All 🔁</button>
+          <button class="btn-secondary btn-done" id="doneBtn" type="button">Done & Edit ➜</button>
+        </div>
+      </section>
+
+      <aside class="sidebar">
+        <h3>Photo Strip (4 shots)</h3>
+        <div class="thumbs" id="thumbs"></div>
+
+        <div class="review-panel" id="reviewPanel">
+          <h4>After capture, choose what to do 💫</h4>
+          <div class="review-actions">
+            <button class="btn-secondary btn-download" id="downloadBtn" type="button">Download ⬇️</button>
+            <button class="btn-secondary btn-share" id="shareBtn" type="button">Share 📤</button>
+            <button class="btn-secondary btn-print" id="printBtn" type="button">Print 🖨️</button>
+            <button class="btn-secondary btn-capture-again" id="captureAgainBtn" type="button">Capture Again 🔁</button>
+          </div>
+          <div class="hint" id="reviewHint">Take at least 1 photo to enable actions.</div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Editing Screen -->
+  <div class="screen" id="editingScreen">
+    <div class="editing-container">
+      <div class="canvas-area">
+        <h2>Edit Your Photos ✨</h2>
+        <div style="position: relative;">
+          <canvas id="editingCanvas" width="640" height="480"></canvas>
+          <div class="text-layer" id="textLayer"></div>
+        </div>
+        <div style="display: flex; justify-content: center; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
+          <button class="btn-secondary btn-capture-again" onclick="prevPhoto()">← Previous</button>
+          <button class="btn-secondary btn-download" id="downloadSingleBtn">Download This Photo ⬇️</button>
+          <button class="btn-secondary btn-capture-again" onclick="nextPhoto()">Next →</button>
+        </div>
+        <div style="text-align: center; margin-top: 10px;">
+          <span id="photoIndicator" style="font-weight: 600; color: var(--pink);">Photo 1 of 4</span>
+        </div>
+      </div>
+
+      <div class="editing-sidebar">
+        <!-- Tabs -->
+        <div class="tab-buttons">
+          <button class="tab-btn active" data-tab="filters">Filters</button>
+          <button class="tab-btn" data-tab="frames">Frames</button>
+          <button class="tab-btn" data-tab="stickers">Stickers</button>
+          <button class="tab-btn" data-tab="text">Text</button>
+          <button class="tab-btn" data-tab="layouts">Layouts</button>
+        </div>
+
+        <!-- Filters Tab -->
+        <div class="tab-content active" id="filtersTab">
+          <h4 style="margin-bottom: 10px; color: var(--pink);">Choose Filter 🎨</h4>
+          <div class="filters" style="flex-direction: column; gap: 8px;">
+            <button class="filter-btn" data-edit-filter="none">Normal</button>
+            <button class="filter-btn" data-edit-filter="brightness(1.1) contrast(1.1)">Bright & Clear</button>
+            <button class="filter-btn" data-edit-filter="sepia(0.4)">Warm Sepia</button>
+            <button class="filter-btn" data-edit-filter="grayscale(1)">Classic B&W</button>
+            <button class="filter-btn eid-filter" data-edit-filter="brightness(1.15) hue-rotate(20deg)">Golden Hour</button>
+            <button class="filter-btn eid-filter" data-edit-filter="saturate(1.5) hue-rotate(180deg)">Mint Dream</button>
+          </div>
+          
+          <div class="adjustments-panel" style="margin-top: 15px;">
+            <h4>Adjust Intensity 🎚️</h4>
+            <div class="slider-group">
+              <label>Brightness: <span id="editBrightnessValue">100</span>%</label>
+              <input type="range" id="editBrightnessSlider" min="50" max="150" value="100">
+            </div>
+            <div class="slider-group">
+              <label>Contrast: <span id="editContrastValue">100</span>%</label>
+              <input type="range" id="editContrastSlider" min="50" max="150" value="100">
+            </div>
+            <div class="slider-group">
+              <label>Saturation: <span id="editSaturationValue">100</span>%</label>
+              <input type="range" id="editSaturationSlider" min="0" max="200" value="100">
+            </div>
+            <div class="slider-group">
+              <label>Opacity: <span id="editOpacityValue">100</span>%</label>
+              <input type="range" id="editOpacitySlider" min="0" max="100" value="100">
+            </div>
+          </div>
+        </div>
+
+        <!-- Frames Tab -->
+        <div class="tab-content" id="framesTab">
+          <h4 style="margin-bottom: 10px; color: var(--pink);">Choose Frame 🖼️</h4>
+          <div class="frame-grid">
+            <div class="frame-option" data-frame="none">
+              <div class="frame-preview">🚫</div>
+              <div>No Frame</div>
+            </div>
+            <div class="frame-option" data-frame="eid-moon">
+              <div class="frame-preview">🌙</div>
+              <div>Eid Moon</div>
+            </div>
+            <div class="frame-option" data-frame="lantern">
+              <div class="frame-preview">🏮</div>
+              <div>Lantern</div>
+            </div>
+            <div class="frame-option" data-frame="floral">
+              <div class="frame-preview">🌸</div>
+              <div>Floral</div>
+            </div>
+            <div class="frame-option" data-frame="sparkle">
+              <div class="frame-preview">✨</div>
+              <div>Sparkle</div>
+            </div>
+            <div class="frame-option" data-frame="hearts">
+              <div class="frame-preview">💕</div>
+              <div>Hearts</div>
+            </div>
+          </div>
+          
+          <div class="adjustments-panel" style="margin-top: 15px;">
+            <h4>Frame Opacity 🔲</h4>
+            <div class="slider-group">
+              <label>Opacity: <span id="frameOpacityValue">100</span>%</label>
+              <input type="range" id="frameOpacitySlider" min="0" max="100" value="100">
+            </div>
+          </div>
+        </div>
+
+        <!-- Stickers Tab -->
+        <div class="tab-content" id="stickersTab">
+          <h4 style="margin-bottom: 10px; color: var(--pink);">Add Stickers 🎀</h4>
+          <div class="sticker-grid">
+            <div class="sticker-item" data-sticker="assests/stickers/crown.png">
+              <img src="assests/stickers/crown.png" alt="Crown">
+            </div>
+            <div class="sticker-item" data-sticker="assests/stickers/bunny.png">
+              <img src="assests/stickers/bunny.png" alt="Bunny">
+            </div>
+            <div class="sticker-item" data-sticker="assests/eid/girly lamp.png">
+              <img src="assests/eid/girly lamp.png" alt="Lamp">
+            </div>
+            <div class="sticker-item" data-sticker="assests/eid/gold bomb.png">
+              <img src="assests/eid/gold bomb.png" alt="Bomb">
+            </div>
+            <div class="sticker-item" data-sticker="assests/eid/golden eid wish.png">
+              <img src="assests/eid/golden eid wish.png" alt="Wish">
+            </div>
+          </div>
+          
+          <div class="adjustments-panel" style="margin-top: 15px;">
+            <h4>Sticker Controls 🎮</h4>
+            <div class="slider-group">
+              <label>Sticker Size: <span id="stickerSizeValue">80</span>px</label>
+              <input type="range" id="stickerSizeSlider" min="40" max="200" value="80">
+            </div>
+            <div class="slider-group">
+              <label>Sticker Opacity: <span id="stickerOpacityValue">100</span>%</label>
+              <input type="range" id="stickerOpacitySlider" min="0" max="100" value="100">
+            </div>
+            <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+              <button class="btn-secondary btn-capture" onclick="bringToFront()" style="font-size: 0.8rem;">Bring Front</button>
+              <button class="btn-secondary btn-done" onclick="sendToBack()" style="font-size: 0.8rem;">Send Back</button>
+              <button class="btn-secondary btn-clear" onclick="deleteSelectedSticker()" style="font-size: 0.8rem;">Delete</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Tab -->
+        <div class="tab-content" id="textTab">
+          <h4 style="margin-bottom: 10px; color: var(--pink);">Add Text 📝</h4>
+          <div class="text-controls">
+            <div class="text-input-group">
+              <input type="text" id="textInput" placeholder="Enter your text...">
+              <button onclick="addText()">Add</button>
+            </div>
+            
+            <select class="font-select" id="fontSelect">
+              <option value="Comic Neue">Comic Neue</option>
+              <option value="Poppins">Poppins</option>
+              <option value="Dancing Script">Dancing Script</option>
+              <option value="Pacifico">Pacifico</option>
+              <option value="Quicksand">Quicksand</option>
+            </select>
+            
+            <input type="color" class="color-select" id="textColor" value="#ec4899">
+            
+            <div class="slider-group">
+              <label>Text Size: <span id="textSizeValue">24</span>px</label>
+              <input type="range" id="textSizeSlider" min="12" max="72" value="24">
+            </div>
+            
+            <div class="slider-group">
+              <label>Text Opacity: <span id="textOpacityValue">100</span>%</label>
+              <input type="range" id="textOpacitySlider" min="0" max="100" value="100">
+            </div>
+          </div>
+        </div>
+
+        <!-- Layouts Tab -->
+        <div class="tab-content" id="layoutsTab">
+          <h4 style="margin-bottom: 10px; color: var(--pink);">Collage Layout 📐</h4>
+          <div class="layout-grid">
+            <div class="layout-option active" data-layout="grid">
+              <div class="layout-preview">⊞</div>
+              <div>2×2 Grid</div>
+            </div>
+            <div class="layout-option" data-layout="strip">
+              <div class="layout-preview">║</div>
+              <div>Strip</div>
+            </div>
+            <div class="layout-option" data-layout="heart">
+              <div class="layout-preview">💖</div>
+              <div>Heart</div>
+            </div>
+            <div class="layout-option" data-layout="polaroid">
+              <div class="layout-preview">📷</div>
+              <div>Polaroid</div>
+            </div>
+          </div>
+          
+          <div class="sparkle-toggle">
+            <input type="checkbox" id="sparkleToggle">
+            <label for="sparkleToggle">Add Sparkle Overlay ✨</label>
+          </div>
+          
+          <div class="slider-group">
+            <label>Sparkle Intensity: <span id="sparkleIntensityValue">50</span>%</label>
+            <input type="range" id="sparkleIntensitySlider" min="0" max="100" value="50">
+          </div>
+        </div>
+
+        <!-- Final Actions -->
+        <div style="margin-top: auto; padding-top: 15px; border-top: 2px dashed #f9a8d4;">
+          <h4 style="margin-bottom: 10px; color: var(--pink); text-align: center;">Finalize ✨</h4>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <button class="btn-secondary btn-download" onclick="downloadAllAsZip()">Download All as ZIP 📦</button>
+            <button class="btn-secondary btn-share" onclick="sharePhotos()">Share to Social 📤</button>
+            <button class="btn-secondary btn-print" onclick="printPhotos()">Print 🖨️</button>
+            <button class="btn-secondary btn-capture-again" onclick="retakeAll()">Start Over 🔁</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gallery Screen -->
+  <div class="screen" id="galleryScreen">
+    <div class="gallery-container">
+      <h2>Your Eid Memories 🌙✨</h2>
+      <div class="gallery-grid" id="galleryGrid"></div>
+      <div class="gallery-actions">
+        <button class="btn-secondary btn-download" onclick="downloadAllAsZip()">Download All 📦</button>
+        <button class="btn-secondary btn-share" onclick="sharePhotos()">Share 📤</button>
+        <button class="btn-secondary btn-print" onclick="printPhotos()">Print 🖨️</button>
+        <button class="btn-secondary btn-capture-again" onclick="retakeAll()">New Session 🔁</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Global Variables
+    const MAX_SHOTS = 4;
+    let currentScreen = 'welcome';
+    let photos = [];
+    let currentPhotoIndex = 0;
+    let currentFilter = 'none';
+    let isCapturing = false;
+    let countdownInterval = null;
+    let countdownValue = 3;
+    let selectedStickerSrc = null;
+    let placedStickers = [];
+    let draggingStickerId = null;
+    let resizingStickerId = null;
+    let dragOffset = { x: 0, y: 0 };
+    let resizeStartSize = null;
+    let resizeStartX = null;
+    let resizeStartY = null;
+    let selectedText = null;
+    let textItems = [];
+    let currentFrame = 'none';
+    let currentLayout = 'grid';
+    let sparkleEnabled = false;
+    let sparkleIntensity = 50;
+
+    // DOM Elements
+    const screens = {
+      welcome: document.getElementById('welcomeScreen'),
+      capture: document.getElementById('captureScreen'),
+      editing: document.getElementById('editingScreen'),
+      gallery: document.getElementById('galleryScreen')
+    };
+
+    const video = document.getElementById('preview');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas?.getContext('2d');
+    const timerEl = document.getElementById('timer');
+    const captureBtn = document.getElementById('captureBtn');
+    const retakeBtn = document.getElementById('retakeBtn');
+    const doneBtn = document.getElementById('doneBtn');
+    const sessionStatus = document.getElementById('sessionStatus');
+    const thumbsEl = document.getElementById('thumbs');
+    const stickerLayer = document.getElementById('stickerLayer');
+    const clearStickersBtn = document.getElementById('clearStickersBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const shareBtn = document.getElementById('shareBtn');
+    const printBtn = document.getElementById('printBtn');
+    const captureAgainBtn = document.getElementById('captureAgainBtn');
+    const reviewHint = document.getElementById('reviewHint');
+    const editingCanvas = document.getElementById('editingCanvas');
+    const editCtx = editingCanvas?.getContext('2d');
+    const textLayer = document.getElementById('textLayer');
+    const sparkleOverlay = document.getElementById('sparkleOverlay');
+    const themeToggle = document.getElementById('themeToggle');
+
+    // Screen Navigation
+    function showScreen(screenName) {
+      Object.values(screens).forEach(screen => screen.classList.remove('active'));
+      screens[screenName].classList.add('active');
+      currentScreen = screenName;
+    }
+
+    function startPhotoSession() {
+      showScreen('capture');
+      startCamera();
+    }
+
+    // Camera Functions
+    async function startCamera() {
+      if (!video) return;
+
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        setTimerText('No camera support', '#ef4444');
+        return;
+      }
+
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 960 } },
+          audio: false
+        });
+        video.srcObject = stream;
+        await video.play();
+        setTimerText('Ready', '#ffffff');
+      } catch (err) {
+        console.error('Camera error:', err);
+        setTimerText('Camera blocked', '#ef4444');
+      }
+    }
+
+    function setTimerText(text, color = '#ffffff') {
+      if (!timerEl) return;
+      timerEl.textContent = text;
+      timerEl.style.color = color;
+    }
+
+    function isVideoReady() {
+      return video && video.srcObject && video.readyState >= 2;
+    }
+
+    // Capture Functions
+    function startCountdown() {
+      if (isCapturing || photos.length >= MAX_SHOTS) return;
+
+      if (!isVideoReady()) {
+        setTimerText('Waiting camera...', '#fbbf24');
+        return;
+      }
+
+      isCapturing = true;
+      updateStatus();
+
+      if (countdownInterval) clearInterval(countdownInterval);
+      countdownValue = 3;
+      setTimerText(String(countdownValue), '#ffffff');
+
+      countdownInterval = setInterval(() => {
+        countdownValue -= 1;
+
+        if (countdownValue > 0) {
+          setTimerText(String(countdownValue), '#ffffff');
+          return;
+        }
+
+        clearInterval(countdownInterval);
+        countdownInterval = null;
+        setTimerText('Smile! 📸', '#34d399');
+        setTimeout(capturePhoto, 400);
+      }, 1000);
+    }
+
+    async function capturePhoto() {
+      if (!ctx || !video || !canvas || !isVideoReady()) {
+        isCapturing = false;
+        updateStatus();
+        setTimerText('Camera not ready', '#ef4444');
+        return;
+      }
+
+      ctx.filter = currentFilter;
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      ctx.filter = 'none';
+      await drawStickersOnCanvas();
+
+      photos.push(canvas.toDataURL('image/png'));
+      renderThumbs();
+      clearPlacedStickers();
+
+      isCapturing = false;
+      updateStatus();
+
+      if (photos.length >= MAX_SHOTS) {
+        setTimerText('Perfect! Click Done ➜', '#a78bfa');
+      } else {
+        setTimerText(`Captured ${photos.length}/${MAX_SHOTS}`, '#a78bfa');
+      }
+    }
+
+    async function drawStickersOnCanvas() {
+      if (!ctx || !canvas || !stickerLayer || !placedStickers.length) return;
+
+      const layerRect = stickerLayer.getBoundingClientRect();
+      const scaleX = canvas.width / layerRect.width;
+      const scaleY = canvas.height / layerRect.height;
+
+      for (const sticker of placedStickers) {
+        try {
+          const img = await loadImage(sticker.src);
+          const drawWidth = sticker.size * scaleX;
+          const drawHeight = sticker.size * scaleY;
+          const drawX = (sticker.x * scaleX) - (drawWidth / 2);
+          const drawY = (sticker.y * scaleY) - (drawHeight / 2);
+          ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
+        } catch {
+          // ignore failed sticker load
+        }
+      }
+    }
+
+    function loadImage(src) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = src;
+      });
+    }
+
+    // Sticker Functions
+    function renderPlacedStickers() {
+      if (!stickerLayer) return;
+      stickerLayer.innerHTML = '';
+
+      placedStickers.forEach(sticker => {
+        const el = document.createElement('img');
+        el.className = 'placed-sticker';
+        el.src = sticker.src;
+        el.alt = 'Placed sticker';
+        el.dataset.id = sticker.id;
+        el.style.left = `${sticker.x}px`;
+        el.style.top = `${sticker.y}px`;
+        el.style.width = `${sticker.size}px`;
+        el.style.height = `${sticker.size}px`;
+        el.style.transform = 'translate(-50%, -50%)';
+        
+        const resizeHandle = document.createElement('div');
+        resizeHandle.className = 'resize-handle';
+        resizeHandle.dataset.id = sticker.id;
+        
+        el.appendChild(resizeHandle);
+        stickerLayer.appendChild(el);
+      });
+    }
+
+    function clearPlacedStickers() {
+      placedStickers = [];
+      renderPlacedStickers();
+    }
+
+    function addStickerAt(clientX, clientY) {
+      if (!stickerLayer || !selectedStickerSrc) return;
+
+      const rect = stickerLayer.getBoundingClientRect();
+      const id = `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+      const sticker = {
+        id,
+        src: selectedStickerSrc,
+        x: clamp(clientX - rect.left, 40, rect.width - 40),
+        y: clamp(clientY - rect.top, 40, rect.height - 40),
+        size: 90
+      };
+
+      placedStickers.push(sticker);
+      renderPlacedStickers();
+    }
+
+    function clamp(value, min, max) {
+      return Math.max(min, Math.min(max, value));
+    }
+
+    // Filter Functions
+    function setupFilterButtons() {
+      const filterBtns = Array.from(document.querySelectorAll('.filter-btn'));
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const isSame = btn.classList.contains('active');
+          filterBtns.forEach(item => item.classList.remove('active'));
+
+          if (isSame) {
+            currentFilter = 'none';
+            if (video) video.style.filter = 'none';
+            return;
+          }
+
+          btn.classList.add('active');
+          currentFilter = btn.dataset.filter || 'none';
+          if (video) video.style.filter = currentFilter;
+        });
+      });
+    }
+
+    function setupStickerOptions() {
+      const stickerOptionBtns = Array.from(document.querySelectorAll('.sticker-option'));
+      stickerOptionBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const isSame = btn.classList.contains('active');
+          stickerOptionBtns.forEach(item => item.classList.remove('active'));
+
+          if (isSame) {
+            selectedStickerSrc = null;
+            return;
+          }
+
+          btn.classList.add('active');
+          selectedStickerSrc = btn.dataset.stickerSrc || null;
+        });
+      });
+    }
+
+    // Adjustments
+    function setupAdjustments() {
+      const sliders = [
+        { id: 'brightnessSlider', valueId: 'brightnessValue', unit: '%' },
+        { id: 'contrastSlider', valueId: 'contrastValue', unit: '%' },
+        { id: 'saturationSlider', valueId: 'saturationValue', unit: '%' },
+        { id: 'hueSlider', valueId: 'hueValue', unit: '°' },
+        { id: 'blurSlider', valueId: 'blurValue', unit: 'px' }
+      ];
+
+      sliders.forEach(slider => {
+        const input = document.getElementById(slider.id);
+        const valueEl = document.getElementById(slider.valueId);
+        if (input && valueEl) {
+          input.addEventListener('input', () => {
+            valueEl.textContent = input.value;
+            updateFilterFromSliders();
+          });
+        }
+      });
+    }
+
+    function updateFilterFromSliders() {
+      const brightness = document.getElementById('brightnessSlider').value / 100;
+      const contrast = document.getElementById('contrastSlider').value / 100;
+      const saturation = document.getElementById('saturationSlider').value / 100;
+      const hue = document.getElementById('hueSlider').value;
+      const blur = document.getElementById('blurSlider').value;
+
+      currentFilter = `brightness(${brightness}) contrast(${contrast}) saturate(${saturation}) hue-rotate(${hue}deg) blur(${blur}px)`;
+      if (video) video.style.filter = currentFilter;
+    }
+
+    // Status Updates
+    function updateStatus() {
+      const hasPhotos = photos.length > 0;
+
+      if (sessionStatus) {
+        sessionStatus.textContent = `Shot ${photos.length} / ${MAX_SHOTS}`;
+      }
+
+      if (captureBtn) {
+        captureBtn.disabled = isCapturing || photos.length >= MAX_SHOTS;
+        captureBtn.textContent = photos.length >= MAX_SHOTS ? 'All 4 Captured ✅' : 'Take Photo 📸';
+      }
+
+      if (doneBtn) doneBtn.disabled = false;
+
+      [downloadBtn, shareBtn, printBtn, captureAgainBtn].forEach(btn => {
+        if (!btn) return;
+        btn.disabled = !hasPhotos;
+      });
+
+      if (reviewHint) {
+        reviewHint.textContent = hasPhotos
+          ? 'Great! You can Download, Share, Print, or Capture Again.'
+          : 'Take at least 1 photo to enable actions.';
+      }
+    }
+
+    function renderThumbs() {
+      if (!thumbsEl) return;
+      thumbsEl.innerHTML = '';
+
+      for (let i = 0; i < MAX_SHOTS; i += 1) {
+        const slot = document.createElement('div');
+        slot.className = 'thumb';
+
+        if (photos[i]) {
+          const img = document.createElement('img');
+          img.src = photos[i];
+          img.alt = `Shot ${i + 1}`;
+          slot.appendChild(img);
+        } else {
+          slot.textContent = `Shot ${i + 1}`;
+        }
+
+        thumbsEl.appendChild(slot);
+      }
+    }
+
+    // Download Functions
+    async function downloadAllAsZip() {
+      if (!photos.length) {
+        alert('No photos to download!');
+        return;
+      }
+
+      try {
+        const zip = new JSZip();
+        
+        // Download each photo with all applied effects
+        for (let i = 0; i < photos.length; i++) {
+          const photoDataURL = await downloadPhotoWithEffects(i);
+          const data = photoDataURL.split(',')[1];
+          zip.file(`eid-photo-${i + 1}.png`, data, { base64: true });
+        }
+
+        const content = await zip.generateAsync({ type: 'blob' });
+        const url = URL.createObjectURL(content);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'eid-photobooth-photos.zip';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      } catch (err) {
+        console.error('Download error:', err);
+        alert('Failed to download ZIP');
+      }
+    }
+
+    // Download single photo with all effects
+    async function downloadPhotoWithEffects(index) {
+      if (!photos[index]) return null;
+
+      // Create a temporary canvas to combine photo with effects
+      const tempCanvas = document.createElement('canvas');
+      tempCanvas.width = 640;
+      tempCanvas.height = 480;
+      const tempCtx = tempCanvas.getContext('2d');
+
+      // Draw the base photo
+      const img = new Image();
+      img.src = photos[index];
+      await new Promise(resolve => img.onload = resolve);
+      tempCtx.drawImage(img, 0, 0, tempCanvas.width, tempCanvas.height);
+
+      // Apply current frame
+      if (currentFrame !== 'none') {
+        tempCtx.save();
+        tempCtx.globalAlpha = document.getElementById('frameOpacitySlider').value / 100;
+        
+        const w = tempCanvas.width;
+        const h = tempCanvas.height;
+        
+        switch(currentFrame) {
+          case 'eid-moon':
+            tempCtx.strokeStyle = '#ffd700';
+            tempCtx.lineWidth = 20;
+            tempCtx.strokeRect(10, 10, w-20, h-20);
+            for (let i = 0; i < 4; i++) {
+              tempCtx.beginPath();
+              tempCtx.arc(30 + (i * (w-60)/3), 30, 15, 0, Math.PI * 2);
+              tempCtx.fillStyle = '#ffd700';
+              tempCtx.fill();
+            }
+            break;
+          case 'lantern':
+            tempCtx.strokeStyle = '#ff6b6b';
+            tempCtx.lineWidth = 15;
+            tempCtx.strokeRect(5, 5, w-10, h-10);
+            for (let i = 0; i < 4; i++) {
+              tempCtx.beginPath();
+              tempCtx.arc(30 + (i * (w-60)/3), 30, 12, 0, Math.PI * 2);
+              tempCtx.fillStyle = '#ff6b6b';
+              tempCtx.fill();
+            }
+            break;
+          case 'floral':
+            tempCtx.strokeStyle = '#f472b6';
+            tempCtx.lineWidth = 25;
+            tempCtx.strokeRect(12, 12, w-24, h-24);
+            for (let i = 0; i < 5; i++) {
+              tempCtx.beginPath();
+              tempCtx.arc(40 + (i * (w-80)/4), 40, 10, 0, Math.PI * 2);
+              tempCtx.fillStyle = '#f472b6';
+              tempCtx.fill();
+            }
+            break;
+          case 'sparkle':
+            tempCtx.strokeStyle = '#c084fc';
+            tempCtx.lineWidth = 18;
+            tempCtx.strokeRect(9, 9, w-18, h-18);
+            for (let i = 0; i < 6; i++) {
+              tempCtx.beginPath();
+              tempCtx.arc(25 + (i * (w-50)/5), 25, 8, 0, Math.PI * 2);
+              tempCtx.fillStyle = '#c084fc';
+              tempCtx.fill();
+            }
+            break;
+          case 'hearts':
+            tempCtx.strokeStyle = '#ec4899';
+            tempCtx.lineWidth = 20;
+            tempCtx.strokeRect(10, 10, w-20, h-20);
+            for (let i = 0; i < 4; i++) {
+              tempCtx.font = '20px Arial';
+              tempCtx.fillText('💕', 20 + (i * (w-40)/3), 25);
+            }
+            break;
+        }
+        tempCtx.restore();
+      }
+
+      // Apply text items
+      textItems.forEach(item => {
+        tempCtx.save();
+        tempCtx.globalAlpha = item.opacity;
+        tempCtx.font = `${item.size}px ${item.font}`;
+        tempCtx.fillStyle = item.color;
+        tempCtx.textBaseline = 'top';
+        tempCtx.fillText(item.text, item.x, item.y);
+        tempCtx.restore();
+      });
+
+      // Apply sparkles
+      if (sparkleEnabled) {
+        const count = Math.floor(sparkleIntensity / 10);
+        for (let i = 0; i < count; i++) {
+          const x = Math.random() * tempCanvas.width;
+          const y = Math.random() * tempCanvas.height;
+          const size = 3 + Math.random() * 5;
+          
+          tempCtx.beginPath();
+          tempCtx.arc(x, y, size, 0, Math.PI * 2);
+          tempCtx.fillStyle = `rgba(255, 215, 0, ${0.3 + Math.random() * 0.7})`;
+          tempCtx.fill();
+        }
+      }
+
+      return tempCanvas.toDataURL('image/png');
+    }
+
+    function downloadCurrentPhoto() {
+      if (!photos[currentPhotoIndex]) return;
+      
+      downloadPhotoWithEffects(currentPhotoIndex).then(photoDataURL => {
+        if (photoDataURL) {
+          const a = document.createElement('a');
+          a.href = photoDataURL;
+          a.download = `eid-photo-${currentPhotoIndex + 1}.png`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        }
+      });
+    }
+
+    // Share Function
+    async function sharePhotos() {
+      if (!photos.length) return;
+
+      try {
+        if (navigator.share) {
+          const blob = await fetch(photos[0]).then(r => r.blob());
+          const file = new File([blob], 'eid-photo.png', { type: 'image/png' });
+          await navigator.share({
+            files: [file],
+            title: 'My Eid Photos',
+            text: 'Check out my Eid photobooth photos! 🌙✨'
+          });
+        } else {
+          // Fallback: copy to clipboard
+          const response = await fetch(photos[0]);
+          const blob = await response.blob();
+          await navigator.clipboard.write([
+            new ClipboardItem({ 'image/png': blob })
+          ]);
+          alert('Photo copied to clipboard! 📋');
+        }
+      } catch (err) {
+        console.error('Share error:', err);
+        alert('Sharing not supported. Photo saved to your device instead.');
+        downloadCurrentPhoto();
+      }
+    }
+
+    // Print Function
+    function printPhotos() {
+      if (!photos.length) return;
+      
+      const printWindow = window.open('', '_blank');
+      printWindow.document.write(`
+        <html>
+          <head><title>Print Eid Photos</title></head>
+          <body style="margin: 0; padding: 20px;">
+            ${photos.map(photo => `<img src="${photo}" style="max-width: 100%; margin: 10px 0;">`).join('')}
+          </body>
+        </html>
+      `);
+      printWindow.document.close();
+      printWindow.print();
+    }
+
+    // Editing Functions
+    function loadPhotoForEditing(index) {
+      if (!photos[index] || !editCtx) return;
+      
+      currentPhotoIndex = index;
+      const img = new Image();
+      img.onload = () => {
+        editCtx.clearRect(0, 0, editingCanvas.width, editingCanvas.height);
+        editCtx.drawImage(img, 0, 0, editingCanvas.width, editingCanvas.height);
+        drawFrame();
+        drawTexts();
+        drawSparkles();
+        updatePhotoIndicator();
+      };
+      img.src = photos[index];
+    }
+
+    function prevPhoto() {
+      if (currentPhotoIndex > 0) {
+        loadPhotoForEditing(currentPhotoIndex - 1);
+      }
+    }
+
+    function nextPhoto() {
+      if (currentPhotoIndex < photos.length - 1) {
+        loadPhotoForEditing(currentPhotoIndex + 1);
+      }
+    }
+
+    function updatePhotoIndicator() {
+      const indicator = document.getElementById('photoIndicator');
+      if (indicator) {
+        indicator.textContent = `Photo ${currentPhotoIndex + 1} of ${photos.length}`;
+      }
+    }
+
+    // Frame Drawing
+    function drawFrame() {
+      if (!editCtx || currentFrame === 'none') return;
+      
+      editCtx.save();
+      editCtx.globalAlpha = document.getElementById('frameOpacitySlider').value / 100;
+      
+      const w = editingCanvas.width;
+      const h = editingCanvas.height;
+      
+      switch(currentFrame) {
+        case 'eid-moon':
+          editCtx.strokeStyle = '#ffd700';
+          editCtx.lineWidth = 20;
+          editCtx.strokeRect(10, 10, w-20, h-20);
+          // Draw moons
+          for (let i = 0; i < 4; i++) {
+            editCtx.beginPath();
+            editCtx.arc(30 + (i * (w-60)/3), 30, 15, 0, Math.PI * 2);
+            editCtx.fillStyle = '#ffd700';
+            editCtx.fill();
+          }
+          break;
+        case 'lantern':
+          editCtx.strokeStyle = '#ff6b6b';
+          editCtx.lineWidth = 15;
+          editCtx.strokeRect(5, 5, w-10, h-10);
+          // Draw lanterns
+          for (let i = 0; i < 4; i++) {
+            editCtx.beginPath();
+            editCtx.arc(30 + (i * (w-60)/3), 30, 12, 0, Math.PI * 2);
+            editCtx.fillStyle = '#ff6b6b';
+            editCtx.fill();
+          }
+          break;
+        case 'floral':
+          editCtx.strokeStyle = '#f472b6';
+          editCtx.lineWidth = 25;
+          editCtx.strokeRect(12, 12, w-24, h-24);
+          // Draw flowers
+          for (let i = 0; i < 5; i++) {
+            editCtx.beginPath();
+            editCtx.arc(40 + (i * (w-80)/4), 40, 10, 0, Math.PI * 2);
+            editCtx.fillStyle = '#f472b6';
+            editCtx.fill();
+          }
+          break;
+        case 'sparkle':
+          editCtx.strokeStyle = '#c084fc';
+          editCtx.lineWidth = 18;
+          editCtx.strokeRect(9, 9, w-18, h-18);
+          // Draw sparkles
+          for (let i = 0; i < 6; i++) {
+            editCtx.beginPath();
+            editCtx.arc(25 + (i * (w-50)/5), 25, 8, 0, Math.PI * 2);
+            editCtx.fillStyle = '#c084fc';
+            editCtx.fill();
+          }
+          break;
+        case 'hearts':
+          editCtx.strokeStyle = '#ec4899';
+          editCtx.lineWidth = 20;
+          editCtx.strokeRect(10, 10, w-20, h-20);
+          // Draw hearts
+          for (let i = 0; i < 4; i++) {
+            editCtx.font = '20px Arial';
+            editCtx.fillText('💕', 20 + (i * (w-40)/3), 25);
+          }
+          break;
+      }
+      
+      editCtx.restore();
+    }
+
+    // Text Functions
+    function addText() {
+      const textInput = document.getElementById('textInput');
+      const text = textInput.value.trim();
+      if (!text) return;
+      
+      const textItem = {
+        id: Date.now(),
+        text: text,
+        font: document.getElementById('fontSelect').value,
+        color: document.getElementById('textColor').value,
+        size: parseInt(document.getElementById('textSizeSlider').value),
+        opacity: parseInt(document.getElementById('textOpacitySlider').value) / 100,
+        x: 100,
+        y: 100
+      };
+      
+      textItems.push(textItem);
+      renderTexts();
+      textInput.value = '';
+    }
+
+    function renderTexts() {
+      if (!textLayer) return;
+      textLayer.innerHTML = '';
+      
+      textItems.forEach(item => {
+        const el = document.createElement('div');
+        el.className = 'text-item';
+        el.textContent = item.text;
+        el.dataset.id = item.id;
+        el.style.left = `${item.x}px`;
+        el.style.top = `${item.y}px`;
+        el.style.fontFamily = item.font;
+        el.style.fontSize = `${item.size}px`;
+        el.style.color = item.color;
+        el.style.opacity = item.opacity;
+        
+        el.addEventListener('mousedown', (e) => startTextDrag(e, item.id));
+        el.addEventListener('click', () => selectText(item.id));
+        
+        textLayer.appendChild(el);
+      });
+    }
+
+    function startTextDrag(e, id) {
+      const textItem = textItems.find(item => item.id === id);
+      if (!textItem) return;
+      
+      selectedText = id;
+      const rect = textLayer.getBoundingClientRect();
+      dragOffset = {
+        x: e.clientX - rect.left - textItem.x,
+        y: e.clientY - rect.top - textItem.y
+      };
+      
+      document.addEventListener('mousemove', handleTextDrag);
+      document.addEventListener('mouseup', stopTextDrag);
+    }
+
+    function handleTextDrag(e) {
+      if (!selectedText) return;
+      
+      const textItem = textItems.find(item => item.id === selectedText);
+      if (!textItem) return;
+      
+      const rect = textLayer.getBoundingClientRect();
+      textItem.x = clamp(e.clientX - rect.left - dragOffset.x, 0, rect.width - 100);
+      textItem.y = clamp(e.clientY - rect.top - dragOffset.y, 0, rect.height - 50);
+      
+      renderTexts();
+    }
+
+    function stopTextDrag() {
+      selectedText = null;
+      document.removeEventListener('mousemove', handleTextDrag);
+      document.removeEventListener('mouseup', stopTextDrag);
+    }
+
+    function selectText(id) {
+      document.querySelectorAll('.text-item').forEach(el => el.classList.remove('selected'));
+      const el = document.querySelector(`[data-id="${id}"]`);
+      if (el) el.classList.add('selected');
+    }
+
+    function drawTexts() {
+      if (!editCtx) return;
+      
+      textItems.forEach(item => {
+        editCtx.save();
+        editCtx.globalAlpha = item.opacity;
+        editCtx.font = `${item.size}px ${item.font}`;
+        editCtx.fillStyle = item.color;
+        editCtx.textBaseline = 'top';
+        editCtx.fillText(item.text, item.x, item.y);
+        editCtx.restore();
+      });
+    }
+
+    // Sparkle Functions
+    function createSparkles() {
+      if (!sparkleOverlay) return;
+      sparkleOverlay.innerHTML = '';
+      
+      if (!sparkleEnabled) {
+        sparkleOverlay.style.display = 'none';
+        return;
+      }
+      
+      sparkleOverlay.style.display = 'block';
+      const count = Math.floor(sparkleIntensity / 10);
+      
+      for (let i = 0; i < count; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.style.left = `${Math.random() * 100}%`;
+        sparkle.style.top = `${Math.random() * 100}%`;
+        sparkle.style.animationDelay = `${Math.random() * 2}s`;
+        sparkleOverlay.appendChild(sparkle);
+      }
+    }
+
+    function drawSparkles() {
+      if (!editCtx || !sparkleEnabled) return;
+      
+      const count = Math.floor(sparkleIntensity / 10);
+      editCtx.save();
+      
+      for (let i = 0; i < count; i++) {
+        const x = Math.random() * editingCanvas.width;
+        const y = Math.random() * editingCanvas.height;
+        const size = 3 + Math.random() * 5;
+        
+        editCtx.beginPath();
+        editCtx.arc(x, y, size, 0, Math.PI * 2);
+        editCtx.fillStyle = `rgba(255, 215, 0, ${0.3 + Math.random() * 0.7})`;
+        editCtx.fill();
+      }
+      
+      editCtx.restore();
+    }
+
+    // Sticker Controls
+    function bringToFront() {
+      // Implementation for layer ordering
+      console.log('Bring to front');
+    }
+
+    function sendToBack() {
+      // Implementation for layer ordering
+      console.log('Send to back');
+    }
+
+    function deleteSelectedSticker() {
+      // Implementation for deleting stickers
+      console.log('Delete sticker');
+    }
+
+    // Retake All
+    function retakeAll() {
+      photos = [];
+      currentPhotoIndex = 0;
+      textItems = [];
+      currentFrame = 'none';
+      clearPlacedStickers();
+      renderThumbs();
+      updateStatus();
+      showScreen('capture');
+      startCamera();
+    }
+
+    // Done & Edit
+    function goToEditing() {
+      if (photos.length > 0) {
+        showScreen('editing');
+        loadPhotoForEditing(0);
+      }
+    }
+
+    // Tab Navigation
+    function setupTabs() {
+      const tabBtns = document.querySelectorAll('.tab-btn');
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          
+          document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.remove('active');
+          });
+          
+          const tabId = btn.dataset.tab;
+          document.getElementById(`${tabId}Tab`).classList.add('active');
+        });
+      });
+    }
+
+    // Frame Selection
+    function setupFrames() {
+      const frameOptions = document.querySelectorAll('.frame-option');
+      frameOptions.forEach(option => {
+        option.addEventListener('click', () => {
+          frameOptions.forEach(o => o.classList.remove('active'));
+          option.classList.add('active');
+          currentFrame = option.dataset.frame;
+          loadPhotoForEditing(currentPhotoIndex);
+        });
+      });
+    }
+
+    // Editing Filter Buttons
+    function setupEditFilters() {
+      const editFilterBtns = document.querySelectorAll('[data-edit-filter]');
+      editFilterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          editFilterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          // Apply filter to editing canvas
+          loadPhotoForEditing(currentPhotoIndex);
+        });
+      });
+    }
+
+    // Sparkle Controls
+    function setupSparkleControls() {
+      const sparkleToggle = document.getElementById('sparkleToggle');
+      const sparkleIntensitySlider = document.getElementById('sparkleIntensitySlider');
+      
+      if (sparkleToggle) {
+        sparkleToggle.addEventListener('change', () => {
+          sparkleEnabled = sparkleToggle.checked;
+          createSparkles();
+          loadPhotoForEditing(currentPhotoIndex);
+        });
+      }
+      
+      if (sparkleIntensitySlider) {
+        sparkleIntensitySlider.addEventListener('input', () => {
+          sparkleIntensity = parseInt(sparkleIntensitySlider.value);
+          document.getElementById('sparkleIntensityValue').textContent = sparkleIntensity;
+          createSparkles();
+          loadPhotoForEditing(currentPhotoIndex);
+        });
+      }
+    }
+
+    // Theme Toggle
+    function setupThemeToggle() {
+      if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+          document.body.classList.toggle('dark-theme');
+          themeToggle.textContent = document.body.classList.contains('dark-theme') ? '☀️' : '🌙';
+        });
+      }
+    }
+
+    // Pointer Events for Stickers
+    function setupStickerDrag() {
+      if (stickerLayer) {
+        stickerLayer.addEventListener('pointerdown', (event) => {
+          const target = event.target;
+
+          if (target instanceof HTMLElement && target.classList.contains('placed-sticker')) {
+            startStickerDrag(target, event.clientX, event.clientY);
+            return;
+          }
+
+          if (target === stickerLayer) {
+            addStickerAt(event.clientX, event.clientY);
+          }
+        });
+
+        stickerLayer.addEventListener('pointermove', (event) => {
+          handleStickerDrag(event.clientX, event.clientY);
+        });
+
+        window.addEventListener('pointerup', stopStickerDrag);
+        window.addEventListener('pointercancel', stopStickerDrag);
+      }
+    }
+
+    function startStickerDrag(target, clientX, clientY) {
+      if (!stickerLayer || !target?.dataset?.id) return;
+      
+      const isResizeHandle = target.classList.contains('resize-handle');
+      
+      if (isResizeHandle) {
+        const sticker = placedStickers.find(item => item.id === target.dataset.id);
+        if (!sticker) return;
+        
+        resizingStickerId = sticker.id;
+        resizeStartSize = sticker.size;
+        resizeStartX = clientX;
+        resizeStartY = clientY;
+        return;
+      }
+      
+      if (target.classList.contains('placed-sticker')) {
+        const sticker = placedStickers.find(item => item.id === target.dataset.id);
+        if (!sticker) return;
+
+        const rect = stickerLayer.getBoundingClientRect();
+        draggingStickerId = sticker.id;
+        dragOffset = {
+          x: clientX - rect.left - sticker.x,
+          y: clientY - rect.top - sticker.y
+        };
+      }
+    }
+
+    function handleStickerDrag(clientX, clientY) {
+      if (!stickerLayer || (!draggingStickerId && !resizingStickerId)) return;
+      
+      if (resizingStickerId) {
+        const sticker = placedStickers.find(item => item.id === resizingStickerId);
+        if (!sticker) return;
+        
+        const deltaX = clientX - resizeStartX;
+        const deltaY = clientY - resizeStartY;
+        const newSize = clamp(resizeStartSize + Math.max(deltaX, deltaY), 40, 200);
+        sticker.size = newSize;
+        renderPlacedStickers();
+        return;
+      }
+      
+      if (draggingStickerId) {
+        const sticker = placedStickers.find(item => item.id === draggingStickerId);
+        if (!sticker) return;
+
+        const rect = stickerLayer.getBoundingClientRect();
+        const half = sticker.size / 2;
+        sticker.x = clamp(clientX - rect.left - dragOffset.x, half, rect.width - half);
+        sticker.y = clamp(clientY - rect.top - dragOffset.y, half, rect.height - half);
+        renderPlacedStickers();
+      }
+    }
+
+    function stopStickerDrag() {
+      draggingStickerId = null;
+      resizingStickerId = null;
+      resizeStartSize = null;
+      resizeStartX = null;
+      resizeStartY = null;
+    }
+
+    // Initialize App
+    function init() {
+      setupFilterButtons();
+      setupStickerOptions();
+      setupAdjustments();
+      setupTabs();
+      setupFrames();
+      setupEditFilters();
+      setupSparkleControls();
+      setupThemeToggle();
+      setupStickerDrag();
+      
+      // Event Listeners
+      if (captureBtn) captureBtn.addEventListener('click', startCountdown);
+      if (retakeBtn) retakeBtn.addEventListener('click', retakeAll);
+      if (doneBtn) doneBtn.addEventListener('click', goToEditing);
+      if (clearStickersBtn) clearStickersBtn.addEventListener('click', clearPlacedStickers);
+      if (downloadBtn) downloadBtn.addEventListener('click', downloadAllAsZip);
+      if (shareBtn) shareBtn.addEventListener('click', sharePhotos);
+      if (printBtn) printBtn.addEventListener('click', printPhotos);
+      if (captureAgainBtn) captureAgainBtn.addEventListener('click', retakeAll);
+      
+      // Download single photo button
+      const downloadSingleBtn = document.getElementById('downloadSingleBtn');
+      if (downloadSingleBtn) {
+        downloadSingleBtn.addEventListener('click', downloadCurrentPhoto);
+      }
+      
+      renderThumbs();
+      updateStatus();
+    }
+
+    // Start the app
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>

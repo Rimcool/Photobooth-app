@@ -1,0 +1,37 @@
+{
+  "name": "eid-cute-snaps-photobooth",
+  "version": "2.0.0",
+  "description": "A beautiful Eid-themed photobooth web app with advanced features 🌙✨",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server . -p 3000 -o",
+    "dev": "npx live-server --port=3000",
+    "serve": "python -m http.server 3000"
+  },
+  "keywords": [
+    "photobooth",
+    "eid",
+    "webapp",
+    "camera",
+    "filters",
+    "stickers"
+  ],
+  "author": "Rimla",
+  "license": "MIT",
+  "dependencies": {
+    "jszip": "^3.10.1",
+    "html2canvas": "^1.4.1"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "live-server": "^1.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rimla/eid-cute-snaps-photobooth"
+  },
+  "homepage": "https://eid-cute-snaps.vercel.app",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
